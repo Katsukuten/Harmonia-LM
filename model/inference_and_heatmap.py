@@ -42,7 +42,7 @@ def main():
     DATABASE = CURRENT_DIR.parent / "database"
     CHECKPOINT_DIR = CURRENT_DIR / "Qwen3" / "checkpoints"
     
-    OUTPUT_GEN_DIR = CURRENT_DIR / "Generated_Music"
+    OUTPUT_GEN_DIR = CURRENT_DIR / "generated_music"
     OUTPUT_GEN_DIR.mkdir(parents=True, exist_ok=True)
 
     # Sampling configuration
