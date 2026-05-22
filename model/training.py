@@ -1,5 +1,5 @@
 """
-Qwen3 Symbolic Music Training Pipeline
+LLM Symbolic Music Training Pipeline
 This script handles the initialization and full-scale training of a Qwen3 Causal LM on MIDI token sequences.
 Architectural & Engineering choices: 
 - Hardware-aware PyTorch optimization (BF16, TF32, SDPA/FlashAttention) tailored for Ampere+ architecture (RTX 50 series).
