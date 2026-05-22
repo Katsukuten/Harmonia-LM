@@ -14,18 +14,18 @@ By treating the [MAESTRO dataset](https://magenta.withgoogle.com/datasets/maestr
 
 Listen to the 4096-context length model generations. The `.mid` token sequences were converted to audio for browser playback:
 
-**1. Ex Nihilo Generation (Unconditioned)**
+**1. Generation From SCratch (Unconditioned)**
 A pure generation starting from a blank state, demonstrating the model's ability to create and sustain a rhythmic loop.
 <br>
-<audio controls src="docs/audio/ex_nihilo_4096.mp3">
+<audio controls src="docs/audio/from_scratch_4096.mp3">
     Your browser does not support the audio element.
 </audio>
 <br>
 
-**2. Primer Continuation (Beethoven's Moonlight Sonata)**
+**2. Primer Continuation (Beethoven's Moonlight Sonata 3rd Movement)**
 The model is fed the beginning of the sonata and tasked to continue it, demonstrating its ability to adapt to a high-density semantic context.
 <br>
-<audio controls src="docs/audio/beethoven_moonlight_primer_4096.mp3">
+<audio controls src="docs/audio/beethoven_4096.mp3">
     Your browser does not support the audio element.
 </audio>
 <br>
