@@ -12,7 +12,7 @@ By treating the [MAESTRO dataset](https://magenta.withgoogle.com/datasets/maestr
 
 ## 2. Audio Demonstrations
 
-Listen to the 4096-context length model generations. The `.mid` token sequences were converted to audio for browser playback:
+Those were made using the 4096-context-lenght model described below.
 
 **1. Generation From Scratch (Unconditioned)**
 A pure generation starting from a blank state, demonstrating the model's ability to create and sustain a rhythmic loop.
@@ -26,7 +26,7 @@ https://github.com/user-attachments/assets/4dee7d7d-da97-4f46-a33b-8dd6e40754fa
 
 ## 3. Hardware Profiling & Model Configurations
 
-To evaluate the impact of context length and data augmentation on the model's understanding of musical cycles, two distinct Qwen3 models were trained from scratch (with identical parameters: ~34M) on a local **RTX 5090 (24GB VRAM)**.
+To evaluate the impact of context length and data augmentation on the model's understanding of musical cycles, two distinct Qwen3 models were trained from scratch (with identical parameters: ~34M) on a local **RTX 5090 L (24GB VRAM)**.
 
 ### Model 1: The Baseline (2048 Context)
 * **Context Window:** 2048 tokens
@@ -39,7 +39,6 @@ To evaluate the impact of context length and data augmentation on the model's un
 * **Dataset:** MAESTRO (Augmented with Pitch, Velocity, and Duration offsets)
 * **Hardware Profiling:** Batch Size = 8, Gradient Accumulation = 16 (Effective Batch = 128).
 * **VRAM Peak:** ~16 GB / 24 GB.
-* *Result:* By halving the batch size and doubling the accumulation steps, we successfully doubled the context window (crucial for long musical loops) while significantly reducing the VRAM footprint, effectively avoiding OOM errors.
 
 ### Compute Optimizations (Bare-Metal)
 * **Hardware-Aware Attention:** Native integration of Scaled Dot-Product Attention (SDPA / FlashAttention) to break the quadratic complexity of standard self-attention.
