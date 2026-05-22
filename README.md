@@ -14,7 +14,7 @@ By treating the [MAESTRO dataset](https://magenta.withgoogle.com/datasets/maestr
 
 Listen to the 4096-context length model generations. The `.mid` token sequences were converted to audio for browser playback:
 
-**1. Generation From SCratch (Unconditioned)**
+**1. Generation From Scratch (Unconditioned)**
 A pure generation starting from a blank state, demonstrating the model's ability to create and sustain a rhythmic loop.
 <br>
 <audio controls src="docs/audio/from_scratch_4096.mp3">
