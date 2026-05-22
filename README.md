@@ -48,7 +48,7 @@ To evaluate the impact of context length and data augmentation on the model's un
 ## 4. Experimental Results & Interpretability
 
 ### 4.1 Training Dynamics (TensorBoard)
-*(Add your TensorBoard Loss / Gradient Norm screenshots here)*
+
 The training curves demonstrate the fast convergence of the Qwen3 architecture on symbolic music, validating our orthogonal initialization and GPT-2 variance scaling logic.
 <p float="left">
   <img src="docs/tensorboard_loss.png" width="49%" />
