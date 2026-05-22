@@ -105,8 +105,8 @@ class Qwen3MusicModel(pl.LightningModule):
             hidden_dropout_prob=dropout_prob 
         )
 
-        # Uncomment ONLY during inference if you plan to create a heatmap (since sdpa actually ) 
-        config._attn_implementation = "eager" 
+        # Uncomment ONLY during inference if you plan to create a heatmap (since sdpa never actually materializes or returns the raw attention weight matrix)
+        # config._attn_implementation = "eager" 
 
         self.model = Qwen3ForCausalLM(config)
         self.model.resize_token_embeddings(tokenizer_vocab_size)
