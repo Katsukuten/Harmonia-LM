@@ -50,23 +50,23 @@ To evaluate the impact of context length and data augmentation on the model's un
 ### 4.1 Training Dynamics (TensorBoard)
 
 The training curves demonstrate the fast convergence of the Qwen3 architecture on symbolic music, validating our orthogonal initialization and GPT-2 variance scaling logic.
-<p float="left">
-  <img src="docs/tensorboard_loss.png" width="49%" />
-</p>
 
 ### 4.2 Latent Space Topology (UMAP)
 To prove the model mathematically maps musical syntax without prior bias, we project its embedding matrix into 2D and 3D spaces using UMAP.
+
+**Prior to the training :** We can see the results of the orthogonal iniialization (same for both models since the tokenizer and seed are the same).
+<img width="3600" height="2400" alt="umap_2d_initial" src="https://github.com/user-attachments/assets/9a13b22f-6e50-4946-917b-97ce42421005" />
+<img width="3600" height="3000" alt="umap_3d_initial-True" src="https://github.com/user-attachments/assets/3237385e-9ae5-4f06-b8ea-2d5ba5b616f4" />
+
 **Post-Training State:** The model successfully warps its latent space to group tokens by functional family (Pitch, Velocity, Duration, TimeShift).
-<p float="left">
-  <img src="docs/umap_2d_trained.png" width="49%" />
-  <img src="docs/umap_3d_trained.png" width="49%" /> 
-</p>
+
+For the **4096-context** model :
+<img width="3600" height="3000" alt="umap_3d_initial-False" src="https://github.com/user-attachments/assets/4c4c0708-7c04-43f3-8fb8-3a12c2eec713" />
+<img width="3600" height="2400" alt="umap_2d_initial-False" src="https://github.com/user-attachments/assets/2e5a3b2c-a245-4925-bea9-2e84e1085ed5" />
+
 
 ### 4.3 Causal Attention Mapping
 The causal attention heatmap from the final Transformer layer illustrates the "look-back" mechanism, showing exactly which prior tokens influenced the current generation step.
-<p float="left">
-  <img src="docs/attention_heatmap.png" width="60%" />
-</p>
 
 ## Repository Architecture
 
