@@ -17,12 +17,12 @@ Listen to the 4096-context length model generations. The `.mid` token sequences 
 **1. Generation From Scratch (Unconditioned)**
 A pure generation starting from a blank state, demonstrating the model's ability to create and sustain a rhythmic loop.
 
-https://github.com/user-attachments/assets/cbb6be50-449b-4ff5-af18-e6c90762a046
+https://github.com/user-attachments/assets/6514ae80-f6dd-40e5-b3dd-61d3a67b22eb
 
 **2. Primer Continuation (Beethoven's Moonlight Sonata 3rd Movement)**
 The model is fed the beginning of the sonata and tasked to continue it, demonstrating its ability to adapt to a high-density semantic context.
 
-https://github.com/user-attachments/assets/35b71e35-1bdf-44ec-a7c9-30a53073995f
+https://github.com/user-attachments/assets/4dee7d7d-da97-4f46-a33b-8dd6e40754fa
 
 ## 3. Hardware Profiling & Model Configurations
 
