@@ -270,7 +270,7 @@ def main():
     )
 
     # Callbacks & Logger
-    logger = TensorBoardLogger(str(ROOT_LOG_DIR), name="Sanity_Check" if SANITY_CHECK else "Qwen3")
+    logger = TensorBoardLogger(str(ROOT_LOG_DIR), name="sanity_check" if SANITY_CHECK else "Qwen3")
     
     if SANITY_CHECK:
         callbacks_list = [TQDMProgressBar(), LearningRateMonitor('step'), InitialConditionAnalysis()]
