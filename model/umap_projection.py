@@ -1,6 +1,6 @@
 """
 Latent Space Topological Analysis (UMAP Projection)
-Read UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction, McInnes et al., 2018
+Reference : UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction, McInnes et al., 2018
 
 This script extracts the embedding matrix from the model to visualize how musical concepts 
 (Pitch, Velocity, Duration, TimeShift) are organized in the latent space.
