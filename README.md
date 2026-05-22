@@ -4,7 +4,7 @@ Fully working pipeline to train a LLM for MIDI music generation. Includes tokeni
 
 ## 1. Project Context: TIPE & Scientific Objectives
 
-This project was developed within the framework of the French CPGE TIPE (Travail d'Initiative Personnelle Encadré), under the annual theme: **"Cycles and Loops" (Cycles et Boucles)**.
+This project was developed within the framework of the French CPGE TIPE (Supervised Personal Research Project), under the annual theme: **"Cycles and Loops" (Cycles et Boucles)**.
 
 Music is fundamentally cyclic (rhythmic loops, recurring motifs, harmonic progressions). While classic sequential models (RNNs/LSTMs) fail to maintain these loops over long periods, this project investigates whether a Large Language Model (LLM)—specifically the **Qwen3 architecture**—can assimilate musical syntax using NLP methodologies. 
 
