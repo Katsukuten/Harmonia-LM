@@ -8,7 +8,7 @@ This project was developed within the framework of the French CPGE TIPE (Travail
 
 Music is fundamentally cyclic (rhythmic loops, recurring motifs, harmonic progressions). While classic sequential models (RNNs/LSTMs) fail to maintain these loops over long periods, this project investigates whether a Large Language Model (LLM)—specifically the **Qwen3 architecture**—can assimilate musical syntax using NLP methodologies. 
 
-By treating the [MAESTRO dataset](https://magenta.withgoogle.com/datasets/maestro) through a [**Time-Shift Duration (TSD)**](https://miditok.readthedocs.io/en/latest/tokenizations.html#:~:text=the%20whole%20music.-,TSD,-%C2%B6) tokenization, the objective is to validate the structural isomorphism between natural language and music, proving that the model can autonomously generate and maintain coherent musical cycles.
+By treating the [MAESTRO dataset](https://magenta.withgoogle.com/datasets/maestro) through a [Time-Shift Duration (TSD)](https://miditok.readthedocs.io/en/latest/tokenizations.html#:~:text=the%20whole%20music.-,TSD,-%C2%B6) tokenization, the objective is to validate the structural isomorphism between natural language and music, proving that the model can autonomously generate and maintain coherent musical cycles.
 
 ## 2. Audio Demonstrations
 
