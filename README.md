@@ -2,7 +2,7 @@
 
 Fully working pipeline to train a LLM for MIDI music generation. Includes tokenization and chunking of a MIDI dataset through Miditok, training and inference using Pytorch Lightning. Works with any CausalLM model found in Hugging Face's transformers python library. This project is my TIPE for french preparatory class.
 
-## 1. Project Context: TIPE & Scientific Objectives
+## Project Context
 
 This project was developed within the framework of the French CPGE TIPE (Supervised Personal Research Project), under the annual theme: **"Cycles and Loops" (Cycles et Boucles)**.
 
@@ -10,7 +10,7 @@ Music is fundamentally cyclic (rhythmic loops, recurring motifs, harmonic progre
 
 By treating the [MAESTRO dataset](https://magenta.withgoogle.com/datasets/maestro) through a [Time-Shift Duration (TSD)](https://miditok.readthedocs.io/en/latest/tokenizations.html#:~:text=the%20whole%20music.-,TSD,-%C2%B6) tokenization, the objective is to validate the structural isomorphism between natural language and music, proving that the model can autonomously generate and maintain coherent musical cycles.
 
-## 2. Audio Demonstrations
+## Audio Demonstrations
 
 Those were made using the 4096-context-length model described below.
 
@@ -45,7 +45,7 @@ To evaluate the impact of context length and data augmentation on the model's un
 * **Mixed Precision:** Full BF16 implementation to prevent gradient underflow while maximizing Tensor Core throughput.
 * **I/O Bottleneck Elimination:** A custom `joblib`-powered PyTorch Dataset pre-tokenizes and caches the entire dataset directly into RAM (96GB DDR5), bypassing SSD read latency during training.
 
-## 4. Experimental Results & Interpretability
+## Experimental Results 
 
 ### 4.1 Training Dynamics (TensorBoard)
 
@@ -68,7 +68,7 @@ The causal attention heatmap from the final Transformer layer illustrates the "l
   <img src="docs/attention_heatmap.png" width="60%" />
 </p>
 
-## 5. Repository Architecture
+## Repository Architecture
 
     Harmonia-LM/
     ├── .vscode/                     # VS Code workspace optimizations
@@ -84,7 +84,7 @@ The causal attention heatmap from the final Transformer layer illustrates the "l
     ├── README.md
     └── requirements.txt
 
-## 6. Quickstart & Reproducibility
+## Quickstart & Reproducibility
 
 **1. Environment Setup**
     
@@ -105,7 +105,7 @@ The training script will automatically detect the tokenized database and cache i
     python model/inference_and_heatmap.py
     python model/umap_projection.py
 
-## 7. References
+## References
 
 This project was built upon the foundations laid by the following literature:
 
