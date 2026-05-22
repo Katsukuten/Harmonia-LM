@@ -1,0 +1,16 @@
+{
+    "files.exclude": {
+        "**/database": true,
+        "**/raw_midis": true,
+        "**/.git": true,
+        "**/__pycache__": true
+    },
+    "search.exclude": {
+        "**/database": true,
+        "**/raw_midis": true
+    },
+    "files.watcherExclude": {
+        "**/database/**": true,
+        "**/raw_midis/**": true
+    }
+}
