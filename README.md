@@ -1,4 +1,3 @@
-
 # Harmonia-LM
 
 Fully working pipeline to train a LLM for MIDI music generation. Includes tokenization and chunking of a MIDI dataset through Miditok, training and inference using Pytorch Lightning. Works with any CausalLM model found in Hugging Face's transformers python library. This project is my TIPE for french preparatory class.
@@ -18,13 +17,12 @@ Listen to the 4096-context length model generations. The `.mid` token sequences 
 **1. Generation From Scratch (Unconditioned)**
 A pure generation starting from a blank state, demonstrating the model's ability to create and sustain a rhythmic loop.
 
-https://github.com/user-attachments/files/28155867/from_scratch_4096.mp3
-
+https://github.com/user-attachments/assets/cbb6be50-449b-4ff5-af18-e6c90762a046
 
 **2. Primer Continuation (Beethoven's Moonlight Sonata 3rd Movement)**
 The model is fed the beginning of the sonata and tasked to continue it, demonstrating its ability to adapt to a high-density semantic context.
 
-https://github.com/user-attachments/files/28155883/beethoven_4096.mp3
+https://github.com/user-attachments/assets/35b71e35-1bdf-44ec-a7c9-30a53073995f
 
 ## 3. Hardware Profiling & Model Configurations
 
