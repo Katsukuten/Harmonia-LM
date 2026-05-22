@@ -86,7 +86,7 @@ The causal attention heatmap from the final Transformer layer illustrates the "l
     │   ├── ram_dataset.py           # In-memory parallelized dataset loader
     │   ├── training.py              # PyTorch Lightning training loop
     │   └── umap_projection.py       # Latent space extraction and UMAP mapping
-    ├── raw_midis/                   # Target directory for raw .mid dataset
+    ├── raw_midis/                   # Target directory for raw .mid and .midi dataset
     ├── extract_midi.py              # TSD tokenization and data augmentation
     ├── README.md
     └── requirements.txt
