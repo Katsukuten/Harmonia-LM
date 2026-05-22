@@ -72,7 +72,6 @@ The causal attention heatmap from the final Transformer layer illustrates the "l
 
     Harmonia-LM/
     ├── .vscode/                     # VS Code workspace optimizations
-    ├── docs/                        # Topological graphs, audio, and attention heatmaps
     ├── model/                       # Core engine
     │   ├── condition_callback.py    # Analyzes weight matrix condition numbers
     │   ├── inference_and_heatmap.py # Autoregressive sampling and visualization
