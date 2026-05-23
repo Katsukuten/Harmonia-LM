@@ -23,8 +23,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from training import Qwen3MusicModel 
 import gc
-import torch.serialization
-torch.serialization.add_safe_globals([TSD, TokenizerConfig]) # Add Miditok to torch's whitelist to allow operations
 
 def cleanup_gpu(model):
     """
