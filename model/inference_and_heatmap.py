@@ -16,13 +16,15 @@ memory overload and unreadable plots, the heatmap isolates the structural relati
 
 import torch
 from pathlib import Path
-from miditok import TSD
+from miditok import TSD, TokenizerConfig
 from transformers import GenerationConfig
 from copy import deepcopy
 import matplotlib.pyplot as plt
 import seaborn as sns
 from training import Qwen3MusicModel 
 import gc
+import torch.serialization
+torch.serialization.add_safe_globals([TSD, TokenizerConfig]) # Add Miditok to torch's whitelist to allow operations
 
 def cleanup_gpu(model):
     """
@@ -47,20 +49,20 @@ def main():
 
     # Sampling configuration
     primer_midi_path = None # Set to None for ex nihilo inference
-    primer_len = 512 if primer_midi_path else 0
+    primer_len = 1024 if primer_midi_path else 0
 
     # Heatmap switch
     GENERATE_HEATMAP = True
     HEATMAP_WINDOW_SIZE = 100
     
-    MAX_TOKENS = 2048
+    MAX_TOKENS = 4096
     tokens_to_generate = MAX_TOKENS - primer_len
     
     # --- Sampling Theory ---
     # Temperature: Entropy control. 
     # < 1.0: The model takes few risks (very strict, perfect for Bach).
     # > 1.0: The model tries wilder connections (jazzy, but risks dissonance).
-    temperature = 1.05
+    temperature = 0.95
 
     # Top-P (Nucleus Sampling): Tails clipping.
     # 0.95 means we eliminate the bottom 5% of probabilities (the obvious "wrong notes").
@@ -74,7 +76,7 @@ def main():
     # Repetition Penalty: The loop breaker.
     # If the model gets stuck playing a motif, increase this (e.g., 1.1 or 1.2).
     # If it never repeats a motif (which sounds unmusical), leave it at 1.0.
-    repetition_penalty = 1.05
+    repetition_penalty = 1.0
 
     # Loading (Tokenizer & Model Weights)
     tokenizer_path = DATABASE / "tokenizer.json"
@@ -94,13 +96,20 @@ def main():
     print(f"Loading weights from: {best_ckpt.name}...")
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     
-    model = Qwen3MusicModel.load_from_checkpoint(
-        best_ckpt,
-        tokenizer=tokenizer,
-        tokenizer_vocab_size=tokenizer.vocab_size,
-        map_location=device,
-        strict=False
-    )
+    # Bypassing Pytorch's 2.6 security patch (safe since the checkpoint is made here)
+    _original_load = torch.load
+    def _trusted_load(*args, **kwargs):
+        kwargs['weights_only'] = False
+        return _original_load(*args, **kwargs)
+        
+    torch.load = _trusted_load
+        
+    try:
+        model = Qwen3MusicModel.load_from_checkpoint(
+            best_ckpt, tokenizer=tokenizer, tokenizer_vocab_size=tokenizer.vocab_size
+        )
+    finally:
+        torch.load = _original_load
     model.eval().to(device)
     print(f"Model ready on {device}")
 
