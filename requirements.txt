@@ -9,3 +9,4 @@ matplotlib
 transformers
 pretty_midi
 tensorboard
+seaborn
