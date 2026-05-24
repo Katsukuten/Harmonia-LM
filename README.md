@@ -10,19 +10,42 @@ Music is fundamentally cyclic (rhythmic loops, recurring motifs, harmonic progre
 
 By treating the [MAESTRO dataset](https://magenta.withgoogle.com/datasets/maestro) through a [Time-Shift Duration (TSD)](https://miditok.readthedocs.io/en/latest/tokenizations.html#:~:text=the%20whole%20music.-,TSD,-%C2%B6) tokenization, the objective is to validate the structural isomorphism between natural language and music, proving that the model can autonomously generate and maintain coherent musical cycles.
 
+*Note: I plan to explain my reasoning and the technical pipeline further in an upcoming YouTube video.*
+
 ## Audio Demonstrations
 
 Those were made using the 4096-context-length model described below.
 
-**1. Generation From Scratch (Unconditioned)**
-A pure generation starting from a blank state, demonstrating the model's ability to create and sustain a rhythmic loop.
+**1. Primer Continuation (Debussy's Clair de Lune)**
+The model is fed the beginning of the piece and tasked to continue it. This piece sits perfectly within the high-density distribution center of the dataset. The model successfully interpolates the harmonic progressions and sustains the flow to some extent.
+<br>
+*(Insert Debussy Video Here)*
+<br>
 
-https://github.com/user-attachments/assets/6514ae80-f6dd-40e5-b3dd-61d3a67b22eb
-
-**2. Primer Continuation (Beethoven's Moonlight Sonata 3rd Movement)**
-The model is fed the beginning of the sonata and tasked to continue it, demonstrating its ability to adapt to a high-density semantic context.
-
+**2. Edge-of-Distribution Case (Beethoven's Moonlight Sonata 3rd Movement)**
+The model is fed a highly complex primer. This movement features extreme rhythmic velocity and note density, pushing the model to the absolute boundaries of the MAESTRO dataset distribution. It highlights the model's struggle with tempos and densities rarely seen during training.
+<br>
 https://github.com/user-attachments/assets/4dee7d7d-da97-4f46-a33b-8dd6e40754fa
+<br>
+
+**3. Generation From Scratch**
+A pure generation starting from a blank state (`BOS`). While not recommended—due to the immense variety of possible starting sequences in the dataset leading to initial noise (noticceable at the beginning of the piece), the model eventually converges toward a specific style. This unconditioned output represents a "statistical mean" of the dataset: a relatively slow tempo with conservative harmonic choices, corroborating the boundaries observed in the Beethoven demonstration.
+<br>
+https://github.com/user-attachments/assets/6514ae80-f6dd-40e5-b3dd-61d3a67b22eb
+<br>
+
+## Inference & Model Engineering  
+
+Autoregressive generation in symbolic music reveals a strict dependency on context density. The decoding parameters must be tuned specifically to avoid deterministic loops or atonal structural collapse. The following are the parameters used for the aforementionned pieces :
+
+* **Repetition Penalty disabled (1.0):** Unlike natural language, music is inherently fractal and cyclic. Any penalty forces the model to flee into chaotic dissonance to avoid repeating previous notes. Activating it won't break anything but proves irrelevant in this setting.
+* **Temperature (0.85 - 0.90):** Lowered from standard NLP defaults to restrict the model's entropy, forcing it to adhere strictly to the harmonic structures learned in the dataset.
+* **Top-K (20) & Top-P (0.95):** A tight truncation boundary to discard the long tail of unmapped, dissonant notes.
+
+Model specifications :
+
+* **RoPE (Rotary Positional Embeddings) Scaling:** Models equipped with RoPE Scaling (e.g, Qwen3) can make use of it to generate past their maximum context window. Though its utility decreases the larger the native context window is as it would outlength most of the pieces in any dataset.
+* **MoE (Mixture of Experts):** Training a MoE model (e.g, Qwen3MoE) with this pipeline is entirelly possible and would in theory produce better results as each expert will be specialized. However the model will have to have 1B+ parameters for it to be sufficiantly effective.
 
 ## 3. Hardware Profiling & Model Configurations
 
