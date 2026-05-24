@@ -16,19 +16,19 @@ By treating the [MAESTRO dataset](https://magenta.withgoogle.com/datasets/maestr
 
 Those were made using the 4096-context-length model described further below.
 
-** - Primer Continuation (Debussy's Clair de Lune)**
+**- Primer Continuation (Debussy's Clair de Lune)**
 The model is fed the beginning of the piece and tasked to continue it. This piece sits perfectly within the high-density distribution center of the dataset. The model successfully interpolates the harmonic progressions and sustains the flow to some extent.
 <br>
 *(Insert Debussy Video Here)*
 <br>
 
-** - Edge-of-Distribution Case (Beethoven's Moonlight Sonata 3rd Movement)**
+**- Edge-of-Distribution Case (Beethoven's Moonlight Sonata 3rd Movement)**
 The model is fed a highly complex primer. This movement features extreme rhythmic velocity and note density, pushing the model to the absolute boundaries of the MAESTRO dataset distribution. It highlights the model's struggle with tempos and densities rarely seen during training.
 <br>
 https://github.com/user-attachments/assets/4dee7d7d-da97-4f46-a33b-8dd6e40754fa
 <br>
 
-** - Generation From Scratch**
+**- Generation From Scratch**
 A pure generation starting from a blank state (`BOS`). While not recommended—due to the immense variety of possible starting sequences in the dataset leading to initial noise (noticeable at the beginning of the piece), the model eventually converges toward a specific style. This unconditioned output represents a "statistical mean" of the dataset: a relatively slow tempo with conservative harmonic choices, corroborating the boundaries observed in the Beethoven demonstration.
 <br>
 https://github.com/user-attachments/assets/6514ae80-f6dd-40e5-b3dd-61d3a67b22eb
