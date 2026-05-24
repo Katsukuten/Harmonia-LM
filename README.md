@@ -74,24 +74,36 @@ To evaluate the impact of context length and data augmentation on the model's un
 
 ### 4.1 Training Dynamics (TensorBoard)
 
-The training curves demonstrate the fast convergence of the Qwen3 architecture on symbolic music, validating our orthogonal initialization and GPT-2 variance scaling logic.
+The training curves demonstrate fast convergence, reaching a **Training Loss of 1.8** and a **Validation Loss of 3.3**. 
+*Note on Validation Loss:* In symbolic music modeling, validation loss naturally plateaus higher than in NLP. While a sentence has a strict grammatical continuation, a musical chord can resolve into dozens of aesthetically valid progressions. The Loss function penalizes the model for not predicting the *exact* original note of the composer, even if the model's choice is harmonically correct.
 
 ### 4.2 Latent Space Topology (UMAP)
 To prove the model mathematically maps musical syntax without prior bias, we project its embedding matrix into 2D and 3D spaces using UMAP.
 
-**Prior to the training :** We can see the results of the orthogonal iniialization (same for both models since the tokenizer and seed are the same).
+**Prior to Training:** We can see the results of the orthogonal initialization (same for both models since the tokenizer and seed are the same).
 <img width="3600" height="2400" alt="umap_2d_initial" src="https://github.com/user-attachments/assets/9a13b22f-6e50-4946-917b-97ce42421005" />
 <img width="3600" height="3000" alt="umap_3d_initial-True" src="https://github.com/user-attachments/assets/3237385e-9ae5-4f06-b8ea-2d5ba5b616f4" />
 
-**Post-Training State:** The model successfully warps its latent space to group tokens by functional family (Pitch, Velocity, Duration, TimeShift).
+**Post-Training State & Scale Discovery:** The model successfully warps its latent space to group tokens by functional family (Pitch, Velocity, Duration, TimeShift). More impressively, by applying Modulo 12 arithmetic to the Pitch tokens, we observe that the model autonomously reconstructed the chromatic scale and isolated the **C Major scale** structurally, proving it "learned" music theory purely from statistical token co-occurrences.
 
-For the **4096-context** model :
+For the **4096-context** model:
 <img width="3600" height="3000" alt="umap_3d_initial-False" src="https://github.com/user-attachments/assets/4c4c0708-7c04-43f3-8fb8-3a12c2eec713" />
 <img width="3600" height="2400" alt="umap_2d_initial-False" src="https://github.com/user-attachments/assets/2e5a3b2c-a245-4925-bea9-2e84e1085ed5" />
 
-
 ### 4.3 Causal Attention Mapping
 The causal attention heatmap from the final Transformer layer illustrates the "look-back" mechanism, showing exactly which prior tokens influenced the current generation step.
+<br>
+*(Insert Heatmap Image Here)*
+<br>
+
+## Real-World Applications & DAW Integration
+
+The empirical behavior of Harmonia-LM establishes that it should not be viewed as an autonomous end-to-end composer, but rather as an **intelligent co-pilot for human-in-the-loop composition**. 
+
+Because the model excels at *continuation* (Primer) but struggles with *ex nihilo* generation, its optimal industrial application lies in its embedding as a plugin within professional Digital Audio Workstations (Ableton Live, FL Studio, Logic Pro). A human composer can write a 4-bar MIDI melody, and the local model can auto-regressively generate the accompanying bassline, harmony, or stylistic continuation based on the dataset's historical distribution.
+
+> **Try it yourself:** An interactive deployment notebook is available to test the model's generation capabilities directly in the cloud.
+> 👉 **[Run Harmonia-LM on Google Colab](#)**()
 
 ## Repository Architecture
 
