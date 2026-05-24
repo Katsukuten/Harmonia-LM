@@ -49,20 +49,20 @@ Model specifications :
 
 ## Hardware Profiling & Model Configurations
 
-To evaluate the impact of context length and data augmentation on the model's understanding of musical cycles, two distinct Qwen3 models were trained from scratch (~30M parameters) on a custom local setup.
+To evaluate the impact of context length and data augmentation on the model's understanding of musical cycles, two distinct Qwen3 models were trained from scratch on a custom local setup.
 
 **Hardware Setup:**
 * **GPU:** NVIDIA RTX 5090 Laptop (24GB VRAM)
 * **CPU:** AMD Ryzen 9955HX3D
 * **RAM:** 96GB DDR5 5600MT/s
 
-### Model 1: The Baseline (2048 Context)
+### Model 1: The Baseline (2048 Context, ~29M Parameters)
 * **Context Window:** 2048 tokens
 * **Dataset:** MAESTRO (No data augmentation)
 * **Hardware Profiling:** Batch Size = 16, Gradient Accumulation = 8 (Effective Batch = 128). VRAM Peak: ~23 GB.
 * **Architecture:** 4 Attention Heads (Lower capacity baseline).
 
-### Model 2: The Optimized Performer (4096 Context)
+### Model 2: The Optimized Performer (4096 Context, ~34M Parameters)
 * **Context Window:** 4096 tokens
 * **Dataset:** MAESTRO (Augmented with Pitch, Velocity, and Duration offsets)
 * **Hardware Profiling:** Batch Size = 8, Gradient Accumulation = 16 (Effective Batch = 128). VRAM Peak: ~16 GB.
