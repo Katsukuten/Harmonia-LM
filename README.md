@@ -51,7 +51,7 @@ To evaluate the impact of context length and data augmentation on the model's un
 
 **Hardware Setup:**
 * **GPU:** NVIDIA RTX 5090 Laptop (24GB VRAM)
-* **CPU:** AMD Ryzen 9955HX3D
+* **CPU:** AMD Ryzen 9955HX3D (16C/32T)
 * **RAM:** 96GB DDR5 5600MT/s
 
 ### Model 1: The Baseline (2048 Context, ~29M Parameters)
