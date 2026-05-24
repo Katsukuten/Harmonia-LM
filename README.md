@@ -14,7 +14,7 @@ By treating the [MAESTRO dataset](https://magenta.withgoogle.com/datasets/maestr
 
 ## Audio Demonstrations
 
-Those were made using the 4096-context-length model described below.
+Those were made using the 4096-context-length model described further below.
 
 **1. Primer Continuation (Debussy's Clair de Lune)**
 The model is fed the beginning of the piece and tasked to continue it. This piece sits perfectly within the high-density distribution center of the dataset. The model successfully interpolates the harmonic progressions and sustains the flow to some extent.
@@ -47,26 +47,28 @@ Model specifications :
 * **RoPE (Rotary Positional Embeddings) Scaling:** Models equipped with RoPE Scaling (e.g, Qwen3) can make use of it to generate past their maximum context window. Though its utility decreases the larger the native context window is as it would outlength most of the pieces in any dataset.
 * **MoE (Mixture of Experts):** Training a MoE model (e.g, Qwen3MoE) with this pipeline is entirely possible and would in theory produce better results as each expert will be specialized. However the model will have to have 1B+ parameters for it to be sufficiantly effective.
 
-## 3. Hardware Profiling & Model Configurations
+## Hardware Profiling & Model Configurations
 
-To evaluate the impact of context length and data augmentation on the model's understanding of musical cycles, two distinct Qwen3 models were trained from scratch (with identical parameters: ~34M) on a local **RTX 5090 L (24GB VRAM)**.
+To evaluate the impact of context length and data augmentation on the model's understanding of musical cycles, two distinct Qwen3 models were trained from scratch (~34M parameters) on a custom local setup.
+
+**Hardware Setup:**
+* **GPU:** NVIDIA RTX 5090 Laptop (23.5GB VRAM)
+* **CPU:** AMD Ryzen 9955HX3D
+* **RAM:** 96GB DDR5 5600MT/s
 
 ### Model 1: The Baseline (2048 Context)
 * **Context Window:** 2048 tokens
 * **Dataset:** MAESTRO (No data augmentation)
-* **Hardware Profiling:** Batch Size = 16, Gradient Accumulation = 8 (Effective Batch = 128).
-* **VRAM Peak:** ~23 GB / 24 GB.
+* **Hardware Profiling:** Batch Size = 16, Gradient Accumulation = 8 (Effective Batch = 128). VRAM Peak: ~23 GB.
 
 ### Model 2: The Optimized Performer (4096 Context)
 * **Context Window:** 4096 tokens
 * **Dataset:** MAESTRO (Augmented with Pitch, Velocity, and Duration offsets)
-* **Hardware Profiling:** Batch Size = 8, Gradient Accumulation = 16 (Effective Batch = 128).
-* **VRAM Peak:** ~16 GB / 24 GB.
+* **Hardware Profiling:** Batch Size = 8, Gradient Accumulation = 16 (Effective Batch = 128). VRAM Peak: ~16 GB.
 
-### Compute Optimizations (Bare-Metal)
-* **Hardware-Aware Attention:** Native integration of Scaled Dot-Product Attention (SDPA / FlashAttention) to break the quadratic complexity of standard self-attention.
-* **Mixed Precision:** Full BF16 implementation to prevent gradient underflow while maximizing Tensor Core throughput.
-* **I/O Bottleneck Elimination:** A custom `joblib`-powered PyTorch Dataset pre-tokenizes and caches the entire dataset directly into RAM (96GB DDR5), bypassing SSD read latency during training.
+### Compute Optimizations
+* **Hardware-Aware Attention:** Native integration of Scaled Dot-Product Attention (SDPA) for mixed-precision BF16 operations, which're optimized on Nvidia's Blackwell architecture.
+* **I/O Bottleneck Elimination:** The entire dataset is pre-tokenized and cached directly into the  RAM, completely bypassing SSD read latency during the training loop.
 
 ## Experimental Results 
 
