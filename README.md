@@ -58,13 +58,13 @@ To evaluate the impact of context length and data augmentation on the model's un
 * **Context Window:** 2048 tokens
 * **Dataset:** MAESTRO (No data augmentation)
 * **Hardware Profiling:** Batch Size = 16, Gradient Accumulation = 8 (Effective Batch = 128). VRAM Peak: ~23 GB.
-* **Architecture:** 4 Attention Heads (Lower capacity baseline).
+* **Architecture:** 4 Attention Heads
 
 ### Model 2: The Optimized Performer (4096 Context, ~34M Parameters)
 * **Context Window:** 4096 tokens
 * **Dataset:** MAESTRO (Augmented with Pitch, Velocity, and Duration offsets)
 * **Hardware Profiling:** Batch Size = 8, Gradient Accumulation = 16 (Effective Batch = 128). VRAM Peak: ~16 GB.
-* **Architecture:** 8 Attention Heads (Optimized semantic separation).
+* **Architecture:** 8 Attention Heads 
 
 ### Compute Optimizations
 * **Hardware-Aware Attention:** Native integration of Scaled Dot-Product Attention (SDPA) for mixed-precision BF16 operations, which are optimized on Nvidia's Blackwell architecture.
@@ -74,8 +74,21 @@ To evaluate the impact of context length and data augmentation on the model's un
 
 ### - Training Dynamics (TensorBoard)
 
-The training curves demonstrate fast convergence, reaching a **Training Loss of 1.8** and a **Validation Loss of 3.3**. 
-*Note on Validation Loss:* In symbolic music modeling, validation loss naturally plateaus higher than in NLP. While a sentence has a strict grammatical continuation, a musical chord can resolve into dozens of aesthetically valid progressions. The Loss function penalizes the model for not predicting the *exact* original note of the composer, even if the model's choice is harmonically correct.
+EarlyStopping was used in the training with a patience of 1, but the saved model is the one with the lowest val_loss.
+
+The 2048-context model took 2 epochs to converge before showing signs of overfitting.
+
+<img width="1550" height="668" alt="image" src="https://github.com/user-attachments/assets/1a95a99b-f774-4565-a8d5-8811d27e29e1" />
+<img width="1553" height="664" alt="image" src="https://github.com/user-attachments/assets/3da1659c-d471-433a-a9af-528bacc2d032" />
+<img width="1560" height="663" alt="image" src="https://github.com/user-attachments/assets/3f99f415-3526-4e89-bf6a-e2ff9af8eaba" />
+
+For the 4096-context model, the training curves demonstrate fast convergence (only one epoch), reaching a **Training Loss of 1.8** and a **Validation Loss of 3.3**. Thus validating the data augmentation.
+
+<img width="1555" height="667" alt="image" src="https://github.com/user-attachments/assets/6a6a7a37-3420-4498-9dc8-c895f1d77826" />
+<img width="1556" height="666" alt="image" src="https://github.com/user-attachments/assets/73908a68-5cf2-4300-a800-e9c0402f3bbd" />
+<img width="1545" height="657" alt="image" src="https://github.com/user-attachments/assets/a220e27c-8242-4274-b610-b04f1c139df1" />
+
+*Note on Validation Loss: In symbolic music modeling, validation loss naturally plateaus higher than in NLP. While a sentence has a strict grammatical continuation, a musical chord can resolve into dozens of aesthetically valid progressions. The Loss function penalizes the model for not predicting the *exact* original note of the composer, even if the model's choice is harmonically correct.*
 
 ### - Latent Space Topology (UMAP)
 To prove the model mathematically maps musical syntax without prior bias, we project its embedding matrix into 2D and 3D spaces using UMAP.
@@ -84,7 +97,7 @@ To prove the model mathematically maps musical syntax without prior bias, we pro
 <img width="4200" height="3000" alt="umap_2d_initial-True" src="https://github.com/user-attachments/assets/81d5a0b3-aabe-42f2-8b0d-a4f180cc0c3e" /><img width="4200" height="3000" alt="umap_3d_initial-True" src="https://github.com/user-attachments/assets/5119ca04-3f8a-4045-965e-09928e11fc31" />
 
 
-**Post-Training State & Scale Discovery:** The models successfully warp their latent spaces to group tokens by functional family (Pitch, Velocity, Duration, TimeShift). More impressively, by applying Modulo 12 arithmetic to the Pitch tokens, we observe that the 4096-context model autonomously reconstructed the chromatic scale and isolated the **C Major scale** structurally, proving it "learned" music theory purely from statistical token co-occurrences.
+**Post-Training State & Scale Discovery:** The models successfully warp their latent spaces to group tokens by functional family (Pitch, Velocity, Duration, TimeShift). More impressively, by applying Modulo 12 arithmetic to the Pitch tokens, we observe that the 4096-context model autonomously reconstructed the chromatic scale and isolated the **C Major scale** structurally, proving it "learned" music theory purely from statistical token co-occurrences. The dataset augmentation seems to be responsible for this, more than the widening of the context window.
 
 For the **2048-context** model :
 
@@ -99,14 +112,17 @@ For the **4096-context** model :
 
 
 ### - Causal Attention Mapping
-The causal attention heatmap from the final Transformer layer illustrates the "look-back" mechanism, showing exactly which prior tokens influenced the current generation step. The following is the heatmap for the Debussy continuation further above.
+The causal attention heatmap from the final Transformer layer illustrates the "look-back" mechanism, showing exactly which prior tokens influenced the current generation step. The following is the heatmap of the last 100 tokens of the Debussy continuation further above, we can notice that the model seems to look back only to the few previous tokens, which might explain the loop at the end of the piece.
 
+<img width="2380" height="2100" alt="primer-debussy-clair-d_len-4097_temp-0 95_topP-0 95_topK-0_rep-1 05_heatmap" src="https://github.com/user-attachments/assets/480cd7d1-b366-4149-ba87-2d91d87b3ff1" />
 
 ## Real-World Applications & DAW Integration
 
 The empirical behavior of Harmonia-LM establishes that it should not be viewed as an autonomous end-to-end composer, but rather as an **intelligent co-pilot for human-in-the-loop composition**. 
 
-Because the model excels at *continuation* (Primer) but struggles with *ex nihilo* generation, its optimal industrial application lies in its embedding as a plugin within professional Digital Audio Workstations (Ableton Live, FL Studio, Logic Pro). A human composer can write a 4-bar MIDI melody, and the local model can auto-regressively generate the accompanying bassline, harmony, or stylistic continuation based on the dataset's historical distribution.
+Because the model excels at *continuation* (Primer) to some extent but struggles with *ex nihilo* generation, its optimal industrial application lies in its embedding as a plugin within professional Digital Audio Workstations (Ableton Live, FL Studio, Logic Pro). A human composer can write a 4-bar MIDI melody, and the local model can auto-regressively generate the accompanying bassline, harmony, or stylistic continuation based on the dataset's historical distribution.
+
+Like most LLMs : the larger/more diverse the dataset is and larger the model is, the better the results will be.
 
 > **Try it yourself:** An interactive deployment notebook is available to test the model's generation capabilities directly in the cloud.
 > 👉 **[Run Harmonia-LM on Google Colab](#)**
