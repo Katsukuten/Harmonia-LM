@@ -17,7 +17,7 @@ By treating the [MAESTRO dataset](https://magenta.withgoogle.com/datasets/maestr
 Those were made using the 4096-context-length model described further below.
 
 **- Primer Continuation (Debussy's Clair de Lune)**
-The model is fed the beginning of the piece and tasked to continue it. This piece sits perfectly within the high-density distribution center of the dataset. The model successfully interpolates the harmonic progressions and sustains the flow to some extent.
+The model is fed the beginning of the piece and tasked to continue it. This piece sits perfectly within the high-density distribution center of the dataset. The model successfully interpolates the harmonic progressions and sustains the flow to some extent. In a general setting, the longer the primer the better the continuation is.
 
 https://github.com/user-attachments/assets/ec28495a-3c1c-4265-a2b6-3bbd945f43b4
 
