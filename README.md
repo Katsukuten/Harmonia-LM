@@ -52,7 +52,7 @@ Model specifications :
 To evaluate the impact of context length and data augmentation on the model's understanding of musical cycles, two distinct Qwen3 models were trained from scratch (~34M parameters) on a custom local setup.
 
 **Hardware Setup:**
-* **GPU:** NVIDIA RTX 5090 Laptop (23.5GB VRAM)
+* **GPU:** NVIDIA RTX 5090 Laptop (24GB VRAM)
 * **CPU:** AMD Ryzen 9955HX3D
 * **RAM:** 96GB DDR5 5600MT/s
 
