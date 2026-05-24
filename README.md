@@ -38,7 +38,7 @@ https://github.com/user-attachments/assets/6514ae80-f6dd-40e5-b3dd-61d3a67b22eb
 
 Autoregressive generation in symbolic music reveals a strict dependency on context density. The decoding parameters must be tuned specifically to avoid deterministic loops or atonal structural collapse. The following are the parameters used for the aforementioned pieces :
 
-* **Repetition Penalty disabled (1.0):** Unlike natural language, music is inherently fractal and cyclic. Any penalty forces the model to flee into chaotic dissonance to avoid repeating previous notes. Activating it won't break anything but proves irrelevant in this setting.
+* **Repetition Penalty (1.05, 1.0 meaning no penalty):** Unlike natural language, music is inherently fractal and cyclic. Any penalty forces the model to flee into chaotic dissonance to avoid repeating previous notes. Giving a small repetition penalty blocks the model from entering in an obvious loop while not restricting its creativity.
 * **Temperature (0.85 - 0.90):** Lowered from standard NLP defaults to restrict the model's entropy, forcing it to adhere strictly to the harmonic structures learned in the dataset.
 * **Top-K (20) & Top-P (0.95):** A tight truncation boundary to discard the long tail of unmapped, dissonant notes.
 
