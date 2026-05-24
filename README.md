@@ -45,7 +45,7 @@ Autoregressive generation in symbolic music reveals a strict dependency on conte
 Model specifications :
 
 * **RoPE (Rotary Positional Embeddings) Scaling:** Models equipped with RoPE Scaling (e.g, Qwen3) can make use of it to generate past their maximum context window. Though its utility decreases the larger the native context window is as it would outlength most of the pieces in any dataset.
-* **MoE (Mixture of Experts):** Training a MoE model (e.g, Qwen3MoE) with this pipeline is entirelly possible and would in theory produce better results as each expert will be specialized. However the model will have to have 1B+ parameters for it to be sufficiantly effective.
+* **MoE (Mixture of Experts):** Training a MoE model (e.g, Qwen3MoE) with this pipeline is entirely possible and would in theory produce better results as each expert will be specialized. However the model will have to have 1B+ parameters for it to be sufficiantly effective.
 
 ## 3. Hardware Profiling & Model Configurations
 
