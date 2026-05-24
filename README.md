@@ -29,14 +29,14 @@ https://github.com/user-attachments/assets/4dee7d7d-da97-4f46-a33b-8dd6e40754fa
 <br>
 
 **3. Generation From Scratch**
-A pure generation starting from a blank state (`BOS`). While not recommended—due to the immense variety of possible starting sequences in the dataset leading to initial noise (noticceable at the beginning of the piece), the model eventually converges toward a specific style. This unconditioned output represents a "statistical mean" of the dataset: a relatively slow tempo with conservative harmonic choices, corroborating the boundaries observed in the Beethoven demonstration.
+A pure generation starting from a blank state (`BOS`). While not recommended—due to the immense variety of possible starting sequences in the dataset leading to initial noise (noticeable at the beginning of the piece), the model eventually converges toward a specific style. This unconditioned output represents a "statistical mean" of the dataset: a relatively slow tempo with conservative harmonic choices, corroborating the boundaries observed in the Beethoven demonstration.
 <br>
 https://github.com/user-attachments/assets/6514ae80-f6dd-40e5-b3dd-61d3a67b22eb
 <br>
 
 ## Inference & Model Engineering  
 
-Autoregressive generation in symbolic music reveals a strict dependency on context density. The decoding parameters must be tuned specifically to avoid deterministic loops or atonal structural collapse. The following are the parameters used for the aforementionned pieces :
+Autoregressive generation in symbolic music reveals a strict dependency on context density. The decoding parameters must be tuned specifically to avoid deterministic loops or atonal structural collapse. The following are the parameters used for the aforementioned pieces :
 
 * **Repetition Penalty disabled (1.0):** Unlike natural language, music is inherently fractal and cyclic. Any penalty forces the model to flee into chaotic dissonance to avoid repeating previous notes. Activating it won't break anything but proves irrelevant in this setting.
 * **Temperature (0.85 - 0.90):** Lowered from standard NLP defaults to restrict the model's entropy, forcing it to adhere strictly to the harmonic structures learned in the dataset.
@@ -45,7 +45,7 @@ Autoregressive generation in symbolic music reveals a strict dependency on conte
 Model specifications :
 
 * **RoPE (Rotary Positional Embeddings) Scaling:** Models equipped with RoPE Scaling (e.g, Qwen3) can make use of it to generate past their maximum context window. Though its utility decreases the larger the native context window is as it would outlength most of the pieces in any dataset.
-* **MoE (Mixture of Experts):** Training a MoE model (e.g, Qwen3MoE) with this pipeline is entirely possible and would in theory produce better results as each expert will be specialized. However the model will have to have 1B+ parameters for it to be sufficiantly effective.
+* **MoE (Mixture of Experts):** Training a MoE model (e.g, Qwen3MoE) with this pipeline is entirely possible and would in theory produce better results as each expert will be specialized. However the model will have to have 1B+ parameters for it to be sufficiently effective.
 
 ## Hardware Profiling & Model Configurations
 
@@ -67,7 +67,7 @@ To evaluate the impact of context length and data augmentation on the model's un
 * **Hardware Profiling:** Batch Size = 8, Gradient Accumulation = 16 (Effective Batch = 128). VRAM Peak: ~16 GB.
 
 ### Compute Optimizations
-* **Hardware-Aware Attention:** Native integration of Scaled Dot-Product Attention (SDPA) for mixed-precision BF16 operations, which're optimized on Nvidia's Blackwell architecture.
+* **Hardware-Aware Attention:** Native integration of Scaled Dot-Product Attention (SDPA) for mixed-precision BF16 operations, which are optimized on Nvidia's Blackwell architecture.
 * **I/O Bottleneck Elimination:** The entire dataset is pre-tokenized and cached directly into the  RAM, completely bypassing SSD read latency during the training loop.
 
 ## Experimental Results 
@@ -103,7 +103,7 @@ The empirical behavior of Harmonia-LM establishes that it should not be viewed a
 Because the model excels at *continuation* (Primer) but struggles with *ex nihilo* generation, its optimal industrial application lies in its embedding as a plugin within professional Digital Audio Workstations (Ableton Live, FL Studio, Logic Pro). A human composer can write a 4-bar MIDI melody, and the local model can auto-regressively generate the accompanying bassline, harmony, or stylistic continuation based on the dataset's historical distribution.
 
 > **Try it yourself:** An interactive deployment notebook is available to test the model's generation capabilities directly in the cloud.
-> 👉 **[Run Harmonia-LM on Google Colab](#)**()
+> 👉 **[Run Harmonia-LM on Google Colab](#)**
 
 ## Repository Architecture
 
