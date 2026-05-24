@@ -1,8 +1,8 @@
 """
-LLM Symbolic Music Training Pipeline
+Qwen3 Symbolic Music Training Pipeline
 This script handles the initialization and full-scale training of a Qwen3 Causal LM on MIDI token sequences.
 Architectural & Engineering choices: 
-- Hardware-aware PyTorch optimization (BF16, TF32, SDPA/FlashAttention) tailored for Ampere+ architecture (RTX 50 series).
+- Hardware-aware PyTorch optimization (BF16, TF32, SDPA/FlashAttention) tailored for Blackwell architecture (RTX 50 series).
 - Custom initializations (Orthogonal embeddings, GPT-2 variance scaling) to ensure stable gradient flow. Totally optional 
   but best for unbiased initialization.
 - Memory-bound optimization via custom RAM dataset to bypass standard I/O bottlenecks (might want to revert if insufficient RAM).
@@ -42,7 +42,7 @@ SANITY_CHECK = False
 transformers.logging.set_verbosity_error()
 logging.getLogger("transformers").setLevel(logging.ERROR)
 
-# Hardware Optimizations (RTX 50 series / Ampere+ Architecture)
+# Hardware Optimizations (RTX 50 series / Blackwell Architecture)
 torch.backends.cudnn.benchmark = True  
 torch.backends.cuda.matmul.allow_tf32 = True  
 torch.backends.cudnn.allow_tf32 = True
@@ -270,7 +270,7 @@ def main():
     )
 
     # Callbacks & Logger
-    logger = TensorBoardLogger(str(ROOT_LOG_DIR), name="sanity_check" if SANITY_CHECK else "Qwen3")
+    logger = TensorBoardLogger(str(ROOT_LOG_DIR), name="sanity_heck" if SANITY_CHECK else "Qwen3")
     
     if SANITY_CHECK:
         callbacks_list = [TQDMProgressBar(), LearningRateMonitor('step'), InitialConditionAnalysis()]
