@@ -86,7 +86,7 @@ To prove the model mathematically maps musical syntax without prior bias, we pro
 <img width="4200" height="3000" alt="umap_2d_initial-True" src="https://github.com/user-attachments/assets/81d5a0b3-aabe-42f2-8b0d-a4f180cc0c3e" /><img width="4200" height="3000" alt="umap_3d_initial-True" src="https://github.com/user-attachments/assets/5119ca04-3f8a-4045-965e-09928e11fc31" />
 
 
-**Post-Training State & Scale Discovery:** The models successfully warps their latent spaces to group tokens by functional family (Pitch, Velocity, Duration, TimeShift). More impressively, by applying Modulo 12 arithmetic to the Pitch tokens, we observe that the 4096-context model autonomously reconstructed the chromatic scale and isolated the **C Major scale** structurally, proving it "learned" music theory purely from statistical token co-occurrences.
+**Post-Training State & Scale Discovery:** The models successfully warp their latent spaces to group tokens by functional family (Pitch, Velocity, Duration, TimeShift). More impressively, by applying Modulo 12 arithmetic to the Pitch tokens, we observe that the 4096-context model autonomously reconstructed the chromatic scale and isolated the **C Major scale** structurally, proving it "learned" music theory purely from statistical token co-occurrences.
 
 For the **2048-context** model :
 
