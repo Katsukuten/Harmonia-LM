@@ -16,19 +16,19 @@ By treating the [MAESTRO dataset](https://magenta.withgoogle.com/datasets/maestr
 
 Those were made using the 4096-context-length model described further below.
 
-**1. Primer Continuation (Debussy's Clair de Lune)**
+** - Primer Continuation (Debussy's Clair de Lune)**
 The model is fed the beginning of the piece and tasked to continue it. This piece sits perfectly within the high-density distribution center of the dataset. The model successfully interpolates the harmonic progressions and sustains the flow to some extent.
 <br>
 *(Insert Debussy Video Here)*
 <br>
 
-**2. Edge-of-Distribution Case (Beethoven's Moonlight Sonata 3rd Movement)**
+** - Edge-of-Distribution Case (Beethoven's Moonlight Sonata 3rd Movement)**
 The model is fed a highly complex primer. This movement features extreme rhythmic velocity and note density, pushing the model to the absolute boundaries of the MAESTRO dataset distribution. It highlights the model's struggle with tempos and densities rarely seen during training.
 <br>
 https://github.com/user-attachments/assets/4dee7d7d-da97-4f46-a33b-8dd6e40754fa
 <br>
 
-**3. Generation From Scratch**
+** - Generation From Scratch**
 A pure generation starting from a blank state (`BOS`). While not recommended—due to the immense variety of possible starting sequences in the dataset leading to initial noise (noticeable at the beginning of the piece), the model eventually converges toward a specific style. This unconditioned output represents a "statistical mean" of the dataset: a relatively slow tempo with conservative harmonic choices, corroborating the boundaries observed in the Beethoven demonstration.
 <br>
 https://github.com/user-attachments/assets/6514ae80-f6dd-40e5-b3dd-61d3a67b22eb
@@ -74,29 +74,35 @@ To evaluate the impact of context length and data augmentation on the model's un
 
 ## Experimental Results 
 
-### 4.1 Training Dynamics (TensorBoard)
+### - Training Dynamics (TensorBoard)
 
 The training curves demonstrate fast convergence, reaching a **Training Loss of 1.8** and a **Validation Loss of 3.3**. 
 *Note on Validation Loss:* In symbolic music modeling, validation loss naturally plateaus higher than in NLP. While a sentence has a strict grammatical continuation, a musical chord can resolve into dozens of aesthetically valid progressions. The Loss function penalizes the model for not predicting the *exact* original note of the composer, even if the model's choice is harmonically correct.
 
-### 4.2 Latent Space Topology (UMAP)
+### - Latent Space Topology (UMAP)
 To prove the model mathematically maps musical syntax without prior bias, we project its embedding matrix into 2D and 3D spaces using UMAP.
 
 **Prior to Training:** We can see the results of the orthogonal initialization (same for both models since the tokenizer and seed are the same).
-<img width="3600" height="2400" alt="umap_2d_initial" src="https://github.com/user-attachments/assets/9a13b22f-6e50-4946-917b-97ce42421005" />
-<img width="3600" height="3000" alt="umap_3d_initial-True" src="https://github.com/user-attachments/assets/3237385e-9ae5-4f06-b8ea-2d5ba5b616f4" />
+<img width="4200" height="3000" alt="umap_2d_initial-True" src="https://github.com/user-attachments/assets/81d5a0b3-aabe-42f2-8b0d-a4f180cc0c3e" /><img width="4200" height="3000" alt="umap_3d_initial-True" src="https://github.com/user-attachments/assets/5119ca04-3f8a-4045-965e-09928e11fc31" />
 
-**Post-Training State & Scale Discovery:** The model successfully warps its latent space to group tokens by functional family (Pitch, Velocity, Duration, TimeShift). More impressively, by applying Modulo 12 arithmetic to the Pitch tokens, we observe that the model autonomously reconstructed the chromatic scale and isolated the **C Major scale** structurally, proving it "learned" music theory purely from statistical token co-occurrences.
 
-For the **4096-context** model:
-<img width="3600" height="3000" alt="umap_3d_initial-False" src="https://github.com/user-attachments/assets/4c4c0708-7c04-43f3-8fb8-3a12c2eec713" />
-<img width="3600" height="2400" alt="umap_2d_initial-False" src="https://github.com/user-attachments/assets/2e5a3b2c-a245-4925-bea9-2e84e1085ed5" />
+**Post-Training State & Scale Discovery:** The models successfully warps their latent spaces to group tokens by functional family (Pitch, Velocity, Duration, TimeShift). More impressively, by applying Modulo 12 arithmetic to the Pitch tokens, we observe that the 4096-context model autonomously reconstructed the chromatic scale and isolated the **C Major scale** structurally, proving it "learned" music theory purely from statistical token co-occurrences.
 
-### 4.3 Causal Attention Mapping
-The causal attention heatmap from the final Transformer layer illustrates the "look-back" mechanism, showing exactly which prior tokens influenced the current generation step.
-<br>
-*(Insert Heatmap Image Here)*
-<br>
+For the **2048-context** model :
+
+<img width="4200" height="3000" alt="umap_3d_initial-False-2048" src="https://github.com/user-attachments/assets/73a28007-fb29-4d58-a639-c962df444c49" />
+<img width="4200" height="3000" alt="umap_2d_initial-False-2048" src="https://github.com/user-attachments/assets/bb0b7432-b138-42da-944a-30f4eb324575" />
+
+For the **4096-context** model :
+
+<img width="4200" height="3000" alt="umap_3d_initial-False" src="https://github.com/user-attachments/assets/a8c35a86-9409-4357-a0ac-893cdc9b8b89"/>
+<img width="4200" height="3000" alt="umap_2d_initial-False" src="https://github.com/user-attachments/assets/16915dfb-0348-4a8f-b2d7-890bf2a5b96a"/>
+<img width="2558" height="1492" alt="umap_scale" src="https://github.com/user-attachments/assets/1eecc969-d975-4db6-8fbb-cc27943b09fb"/>
+
+
+### - Causal Attention Mapping
+The causal attention heatmap from the final Transformer layer illustrates the "look-back" mechanism, showing exactly which prior tokens influenced the current generation step. The following is the heatmap for the Debussy continuation further above.
+
 
 ## Real-World Applications & DAW Integration
 
