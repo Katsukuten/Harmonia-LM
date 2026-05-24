@@ -24,7 +24,8 @@ https://github.com/user-attachments/assets/ec28495a-3c1c-4265-a2b6-3bbd945f43b4
 **- Edge-of-Distribution Case (Beethoven's Moonlight Sonata 3rd Movement)**
 The model is fed a highly complex primer. This movement features extreme rhythmic velocity and note density, pushing the model to the absolute boundaries of the MAESTRO dataset distribution. It highlights the model's struggle with tempos and densities rarely seen during training.
 
-https://github.com/user-attachments/assets/aa8f1ed2-4c5f-462c-b29b-d830a746c0cc
+https://github.com/user-attachments/assets/22e38b23-b196-49d8-9517-df12073f9d8c
+
 
 **- Generation From Scratch**
 A pure generation starting from a blank state (`BOS`). While not recommended—due to the immense variety of possible starting sequences in the dataset leading to initial noise, the model eventually converges toward a specific style. This unconditioned output represents a "statistical mean" of the dataset: a relatively slow tempo with conservative harmonic choices, corroborating the boundaries observed in the Beethoven demonstration.
