@@ -46,7 +46,7 @@ def main():
     OUTPUT_GEN_DIR.mkdir(parents=True, exist_ok=True)
 
     # Sampling configuration
-    primer_midi_path = Path(r"C:\Users\Katsu\Downloads\Ludwig Van Beethoven - Moonlight Sonata 3rd Movement.mid.mid") # Set to None for ex nihilo inference
+    primer_midi_path = None # Set to None for ex nihilo inference
     primer_len = 1024 if primer_midi_path else 0
 
     # Heatmap switch
