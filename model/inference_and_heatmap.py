@@ -46,7 +46,7 @@ def main():
     OUTPUT_GEN_DIR.mkdir(parents=True, exist_ok=True)
 
     # Sampling configuration
-    primer_midi_path = None # Set to None for ex nihilo inference
+    primer_midi_path = Path(r"C:\Users\Katsu\Downloads\Ludwig Van Beethoven - Moonlight Sonata 3rd Movement.mid.mid") # Set to None for ex nihilo inference
     primer_len = 1024 if primer_midi_path else 0
 
     # Heatmap switch
@@ -58,9 +58,9 @@ def main():
     
     # --- Sampling Theory ---
     # Temperature: Entropy control. 
-    # < 1.0: The model takes few risks (very strict, perfect for Bach).
-    # > 1.0: The model tries wilder connections (jazzy, but risks dissonance).
-    temperature = 0.95
+    # < 1.0: The model takes few risks.
+    # > 1.0: The model tries wilder connections.
+    temperature = 0.85
 
     # Top-P (Nucleus Sampling): Tails clipping.
     # 0.95 means we eliminate the bottom 5% of probabilities (the obvious "wrong notes").
@@ -138,7 +138,7 @@ def main():
         # Generation engine
         gen_config = GenerationConfig(
             max_new_tokens=tokens_to_generate,
-            min_new_tokens=tokens_to_generate,
+            min_new_tokens=0, # So the model naturally stops at EOS
             do_sample=True,
             temperature=temperature,
             top_k=k,
