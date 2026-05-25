@@ -125,7 +125,7 @@ Because the model excels at *continuation* (Primer) to some extent but struggles
 Like most LLMs : the larger/more diverse the dataset is and larger the model is, the better the results will be.
 
 > **Try it yourself:** An interactive deployment notebook is available to test the model's generation capabilities directly in the cloud.
-> 👉 **[Run Harmonia-LM on Google Colab](#)**
+> 👉 **[Run Harmonia-LM on Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Katsukuten/Harmonia-LM/blob/main/demo.ipynb)**
 
 ## Repository Architecture
 
