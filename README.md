@@ -22,7 +22,7 @@ The model is fed the beginning of the piece and tasked to continue it. This piec
 https://github.com/user-attachments/assets/ec28495a-3c1c-4265-a2b6-3bbd945f43b4
 
 **- Edge-of-Distribution Case (Beethoven's Moonlight Sonata 3rd Movement)**
-The model is fed a highly complex primer. This movement features extreme rhythmic velocity and note density, pushing the model to the absolute boundaries of the MAESTRO dataset distribution. It highlights the model's struggle with tempos and densities rarely seen during training. *(for some reason Github cannot show the following video, you might want to download it to see the piano roll)*
+The model is fed a highly complex primer. This movement features extreme rhythmic velocity and note density, pushing the model to the absolute boundaries of the MAESTRO dataset distribution. It highlights the model's struggle with tempos and densities rarely seen during training.
 
 https://github.com/user-attachments/assets/22e38b23-b196-49d8-9517-df12073f9d8c
 
