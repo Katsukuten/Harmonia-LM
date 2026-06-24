@@ -68,7 +68,7 @@ def main():
 
     # Top-K: Strict barrier.
     # If k=15, the model can only choose among the 15 most likely tokens at each step.
-    # Highly useful in music to force the model to stay within a scale/chord. Set to 0 to disable.
+    # Technically useful in music to force the model to stay within a scale/chord. Set to 0 to disable.
     k = 0
 
     # Repetition Penalty: The loop breaker.
