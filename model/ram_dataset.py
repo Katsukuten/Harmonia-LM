@@ -55,11 +55,11 @@ class RAMMidiDataset(Dataset):
         if cache_path and os.path.exists(cache_path):
             print(f"[CACHE] Immediate loading from {cache_path}...")
             self.examples = torch.load(cache_path)
-            print(f"✅ {len(self.examples)} sequences loaded into RAM.")
+            print(f"{len(self.examples)} sequences loaded into RAM.")
             return
 
         # Parallel loading
-        print(f"[CPU] Parallel tokenization of {len(files_paths)} files...")
+        print(f"Parallel tokenization of {len(files_paths)} files...")
         
         results_nested = Parallel(n_jobs=-1, backend="loky")(
             delayed(process_one_file_direct)(p, tokenizer, max_seq_len) 
