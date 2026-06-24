@@ -159,7 +159,7 @@ def main():
                 )
             except RuntimeError as e:
                 print(f"Error during generation: {e}")
-                return # Python met ce return en pause, exécute le finally, puis quitte le script.
+                return 
 
         generated_ids = outputs[0].tolist()
         
