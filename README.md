@@ -1,4 +1,4 @@
-# Harmonia-LM
+# Harmonia-LM (Proof of Concept)
 
 Fully working pipeline to train a LLM for MIDI music generation. Includes tokenization and chunking of a MIDI dataset through Miditok, training and inference using Pytorch Lightning. Works with any CausalLM model found in Hugging Face's transformers python library. This project is my TIPE for french preparatory class.
 
@@ -38,7 +38,7 @@ Autoregressive generation in symbolic music reveals a strict dependency on conte
 
 * **Repetition Penalty (1.05, 1.0 meaning no penalty):** Unlike natural language, music is inherently fractal and cyclic. Any penalty forces the model to flee into chaotic dissonance to avoid repeating previous notes. Giving a small repetition penalty blocks the model from entering in an obvious loop while not restricting its creativity.
 * **Temperature (0.85 - 0.90):** Lowered from standard NLP defaults to restrict the model's entropy, forcing it to adhere strictly to the harmonic structures learned in the dataset.
-* **Top-K (20) & Top-P (0.95):** A tight truncation boundary to discard the long tail of unmapped, dissonant notes.
+* **Top-K (0) & Top-P (0.95):** A tight truncation boundary to discard the long tail of unmapped, dissonant notes.
 
 Model specifications :
 
