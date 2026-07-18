@@ -11,22 +11,20 @@ import random
 from miditok import TSD, TokenizerConfig
 from miditok.utils import split_files_for_training
 from miditok.data_augmentation import augment_dataset
-import pretty_midi
-from tqdm import tqdm
 
-# Global Parameters 
-SEQ_LEN = 4096 # Preferably the same length as your model's context window
-OVERLAP_BARS = 32 # Adjust depending on SEQ_LEN
+# Global Parameters
+SEQ_LEN = 4096  # Preferably the same length as your model's context window
+OVERLAP_BARS = 32  # Adjust depending on SEQ_LEN
 MIDI_DIR = Path(__file__).resolve().parent / "raw_midis"
 OUTPUT_DIR = Path(__file__).resolve().parent / "database"
 
-# Tokenizer Configuration (Adjust depending on your goals) 
+# Tokenizer Configuration (Adjust depending on your goals)
 config = TokenizerConfig(
-    pitch_range=(21, 109), 
-    beat_res={(0, 4): 24, (4, 12): 8}, # High resolution on short notes
+    pitch_range=(21, 109),
+    beat_res={(0, 4): 24, (4, 12): 8},  # High resolution on short notes
     num_velocities=127,
     special_tokens=["PAD", "BOS", "EOS", "MASK"],
-    encode_ids_split="bar", 
+    encode_ids_split="bar",
     use_chords=False,
     use_rests=False,
     use_time_signatures=False,
@@ -34,18 +32,21 @@ config = TokenizerConfig(
     program_changes=False,
     use_velocities=True,
     use_sustain_pedals=False,
-    sustain_pedal_duration=True, # Sustain pedal modeled via note duration (relevant with TSD)
+    sustain_pedal_duration=True,  # Sustain pedal modeled via note duration (relevant with TSD)
     use_tempos=True,
     num_tempos=64,
-    tempo_range=(40, 250) 
+    tempo_range=(40, 250),
 )
 
-tokenizer = TSD(config)  # Read Miditok's documentation for more info : https://miditok.readthedocs.io/en/latest/
+tokenizer = TSD(
+    config
+)  # Read Miditok's documentation for more info : https://miditok.readthedocs.io/en/latest/
+
 
 def main():
     print("--- Initialization ---")
-    
-    if OUTPUT_DIR.exists(): 
+
+    if OUTPUT_DIR.exists():
         # Don't forget to save the tokenizer.json file if you plan to test different extraction methods
         shutil.rmtree(OUTPUT_DIR)
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -56,7 +57,7 @@ def main():
     # ==============================================================================
     # [OPTIONAL MODULE] MIDI files validation
     # Since I used Google Magenta's Maestro dataset, which has already been verified,
-    # checking the files would be pointless. However, if your dataset has been scraped from the internet, 
+    # checking the files would be pointless. However, if your dataset has been scraped from the internet,
     # you might want to run the following script to avoid potentially empty or corrupted files.
     # ==============================================================================
     """
@@ -77,10 +78,10 @@ def main():
     # ==============================================================================
     # [OPTIONAL MODULE] Tokenizer training (e.g., BPE), cf. Miditok's documentation
     # Disabled because I prioritize strict temporal precision, thus I want the model
-    # to only use elementary tokens. A large BPE vocabulary compresses the sequence 
+    # to only use elementary tokens. A large BPE vocabulary compresses the sequence
     # but smooths out fine resolution (loss of rubato, cf. Byte Pair Encoding for Symbolic Music, Fradet et al., 2023),
     # which is irrelevant in ***my*** setting.
-    # Enable if: Need to model global structures over very long durations 
+    # Enable if: Need to model global structures over very long durations
     # (where compression takes precedence over temporal precision).
     # ==============================================================================
     """
@@ -122,20 +123,26 @@ def main():
         # Change this to artificially meet the "Chinchilla optimal scaling"
         # (dataset_size = 20 * model_size, cf. Training Compute-Optimal Large Language Models, Hoffmann et al., 2022)
         # if your dataset is not big enough.
-        # This script might also solve an overfitting problem, though both augmentation and 
+        # This script might also solve an overfitting problem, though both augmentation and
         # non-augmentation showed sufficient results for the same dataset and model size in my case.
         # ==============================================================================
         print(f"Augmenting {subset_name} set...")
         augment_dataset(
             subset_chunks_dir,
-            pitch_offsets=[-3,-2,-1,1,2,3], 
-            velocity_offsets=[-5,-2,2,5], 
-            duration_offsets=[0.9,0.95,1.05,1.1], 
+            pitch_offsets=[-3, -2, -1, 1, 2, 3],
+            velocity_offsets=[-5, -2, 2, 5],
+            duration_offsets=[0.9, 0.95, 1.05, 1.1],
         )
 
     # Verification and Summary
-    nb_train = len(list((OUTPUT_DIR / "midi_train").rglob("*.mid")) + list((OUTPUT_DIR / "midi_train").rglob("*.midi")))
-    nb_val = len(list((OUTPUT_DIR / "midi_val").rglob("*.mid")) + list((OUTPUT_DIR / "midi_val").rglob("*.midi")))
+    nb_train = len(
+        list((OUTPUT_DIR / "midi_train").rglob("*.mid"))
+        + list((OUTPUT_DIR / "midi_train").rglob("*.midi"))
+    )
+    nb_val = len(
+        list((OUTPUT_DIR / "midi_val").rglob("*.mid"))
+        + list((OUTPUT_DIR / "midi_val").rglob("*.midi"))
+    )
 
     summary_text = (
         "--- EXTRACTION SUMMARY ---\n"
@@ -149,13 +156,14 @@ def main():
 
     # Console output
     print(f"\n{summary_text}")
-    
+
     # Save to log file
     log_file_path = OUTPUT_DIR / "dataset_summary.txt"
     with open(log_file_path, "w", encoding="utf-8") as f:
         f.write(summary_text)
-    
+
     print(f"Log saved to: {log_file_path}")
+
 
 if __name__ == "__main__":
     main()
