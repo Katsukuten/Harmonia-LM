@@ -10,7 +10,7 @@ Music is fundamentally cyclic (rhythmic loops, recurring motifs, harmonic progre
 
 By treating the [MAESTRO dataset](https://magenta.withgoogle.com/datasets/maestro) through a [Time-Shift Duration (TSD)](https://miditok.readthedocs.io/en/latest/tokenizations.html#:~:text=the%20whole%20music.-,TSD,-%C2%B6) tokenization, the objective is to validate the structural isomorphism between natural language and music, proving that the model can autonomously generate and maintain coherent musical cycles.
 
-*Note: I plan to explain my reasoning and the technical pipeline further in an upcoming YouTube video.*
+*Note: I plan to explain my reasoning and the technical pipeline further in an upcoming three-videos Youtube series*
 
 ## Audio Demonstrations
 
