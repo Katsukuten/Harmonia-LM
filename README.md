@@ -132,6 +132,7 @@ Like most LLMs : the larger/more diverse the dataset is and larger the model is,
 Harmonia-LM/
 ├── .vscode/                     # VS Code workspace optimizations
 ├── model/                       # Core engine
+│   ├── __init__.py
 │   ├── condition_callback.py    # Analyzes weight matrix condition numbers
 │   ├── inference_and_heatmap.py # Autoregressive sampling and visualization
 │   ├── ram_dataset.py           # In-memory parallelized dataset loader
