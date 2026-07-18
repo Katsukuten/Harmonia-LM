@@ -140,28 +140,33 @@ Like most LLMs : the larger/more diverse the dataset is and larger the model is,
     ├── raw_midis/                   # Target directory for raw .mid and .midi dataset
     ├── extract_midi.py              # TSD tokenization and data augmentation
     ├── README.md
-    └── requirements.txt
+    ├── .python-version
+    ├── pyproject.roml
+    └── uv.lock
 
 ## Quickstart & Reproducibility
 
 **1. Environment Setup**
-    
-    pip install -r requirements.txt
+This project uses `uv`, the blazing-fast Rust-based package manager, to guarantee deterministic environments. You do not need to manually create a virtual environment.
+
+pip install uv
+uv sync
+
 
 **2. Data Ingestion**
 Place your `.mid` or `.midi` files inside the `raw_midis/` directory, then execute the extraction pipeline:
     
-    python extract_midi.py
+    uv run extract_midi.py
 
 **3. Model Training**
 The training script will automatically detect the tokenized database and cache it into RAM.
     
-    python model/training.py
+    uv run model/training.py
 
 **4. Inference & Analysis**
     
-    python model/inference_and_heatmap.py
-    python model/umap_projection.py
+    uv run model/inference_and_heatmap.py
+    uv run model/umap_projection.py
 
 ## References
 
