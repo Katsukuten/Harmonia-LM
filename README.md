@@ -160,7 +160,7 @@ Place your `.mid` or `.midi` files inside the `raw_midis/` directory, then execu
     uv run extract_midi.py
 
 **3. Model Training**
-The training script will automatically detect the tokenized database and cache it into RAM.
+The training script will automatically tokenize the database and cache it into RAM.
     
     uv run model/training.py
 
