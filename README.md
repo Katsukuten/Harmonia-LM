@@ -149,9 +149,10 @@ Like most LLMs : the larger/more diverse the dataset is and larger the model is,
 **1. Environment Setup**
 This project uses `uv`, the blazing-fast Rust-based package manager, to guarantee deterministic environments. You do not need to manually create a virtual environment.
 
+```bash
 pip install uv
 uv sync
-
+```
 
 **2. Data Ingestion**
 Place your `.mid` or `.midi` files inside the `raw_midis/` directory, then execute the extraction pipeline:
