@@ -128,47 +128,45 @@ Like most LLMs : the larger/more diverse the dataset is and larger the model is,
 > 👉 **[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Katsukuten/Harmonia-LM/blob/main/demo.ipynb)**
 
 ## Repository Architecture
-
-    Harmonia-LM/
-    ├── .vscode/                     # VS Code workspace optimizations
-    ├── model/                       # Core engine
-    │   ├── condition_callback.py    # Analyzes weight matrix condition numbers
-    │   ├── inference_and_heatmap.py # Autoregressive sampling and visualization
-    │   ├── ram_dataset.py           # In-memory parallelized dataset loader
-    │   ├── training.py              # PyTorch Lightning training loop
-    │   └── umap_projection.py       # Latent space extraction and UMAP mapping
-    ├── raw_midis/                   # Target directory for raw .mid and .midi dataset
-    ├── extract_midi.py              # TSD tokenization and data augmentation
-    ├── README.md
-    ├── .python-version
-    ├── pyproject.roml
-    └── uv.lock
-
+```bash
+Harmonia-LM/
+├── .vscode/                     # VS Code workspace optimizations
+├── model/                       # Core engine
+│   ├── condition_callback.py    # Analyzes weight matrix condition numbers
+│   ├── inference_and_heatmap.py # Autoregressive sampling and visualization
+│   ├── ram_dataset.py           # In-memory parallelized dataset loader
+│   ├── training.py              # PyTorch Lightning training loop
+│   └── umap_projection.py       # Latent space extraction and UMAP mapping
+├── raw_midis/                   # Target directory for raw .mid and .midi dataset
+├── extract_midi.py              # TSD tokenization and data augmentation
+├── README.md
+├── .python-version
+├── pyproject.toml
+└── uv.lock
+```
 ## Quickstart & Reproducibility
 
 **1. Environment Setup**
 This project uses `uv`, the blazing-fast Rust-based package manager, to guarantee deterministic environments. You do not need to manually create a virtual environment.
-
 ```bash
 pip install uv
 uv sync
 ```
-
 **2. Data Ingestion**
 Place your `.mid` or `.midi` files inside the `raw_midis/` directory, then execute the extraction pipeline:
-    
-    uv run extract_midi.py
-
+```bash  
+uv run extract_midi.py
+```
 **3. Model Training**
 The training script will automatically tokenize the database and cache it into RAM.
-    
-    uv run model/training.py
-
+ ```bash   
+ uv run model/training.py
+```
 **4. Inference & Analysis**
-    
-    uv run model/inference_and_heatmap.py
-    uv run model/umap_projection.py
-
+```bash    
+uv run model/inference_and_heatmap.py
+uv run model/umap_projection.py
+```
 ## References
 
 This project was built upon the foundations laid by the following literature:
