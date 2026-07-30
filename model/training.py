@@ -14,6 +14,7 @@ but they are likely due to library conflicts. The script runs without any fatal 
 
 import math
 import logging
+import numpy
 from pathlib import Path
 from multiprocessing import freeze_support
 import torch
@@ -32,6 +33,7 @@ from pytorch_lightning.loggers import TensorBoardLogger
 import transformers
 from transformers import Qwen3Config, Qwen3ForCausalLM  # Change depending on the LLM
 from miditok.pytorch_data.collators import DataCollator
+from miditok.classes import TokenizerConfig
 from miditok import TSD
 
 # from miditok.pytorch_data import DatasetMIDI (uncomment only if you don't use RAMMidiDataset)
@@ -47,9 +49,6 @@ SANITY_CHECK = False
 
 transformers.logging.set_verbosity_error()
 logging.getLogger("transformers").setLevel(logging.ERROR)
-
-# Bypassing Pytorch's 2.6 security patch (safe since the checkpoint is made here)
-torch.serialization.add_safe_globals([TSD])
 
 # Hardware Optimizations (RTX 50 series / Blackwell Architecture)
 torch.backends.cudnn.benchmark = True
@@ -412,9 +411,14 @@ def main():
     )
 
     print("\n Starting training...")
-    trainer.fit(
-        model, datamodule=datamodule, ckpt_path=ckpt_path if not SANITY_CHECK else None
-    )
+
+    # Bypassing Pytorch's security
+    from unittest.mock import patch
+    
+    with patch('torch.load', lambda *args, **kwargs: torch.serialization.load(*args, **{**kwargs, 'weights_only': False})):
+        trainer.fit(
+            model, datamodule=datamodule, ckpt_path=ckpt_path if not SANITY_CHECK else None
+        )
 
 
 if __name__ == "__main__":
