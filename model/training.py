@@ -49,7 +49,7 @@ transformers.logging.set_verbosity_error()
 logging.getLogger("transformers").setLevel(logging.ERROR)
 
 # Bypassing Pytorch's 2.6 security patch (safe since the checkpoint is made here)
-_original_load = torch.load
+torch.serialization.add_safe_globals([TSD])
 
 # Hardware Optimizations (RTX 50 series / Blackwell Architecture)
 torch.backends.cudnn.benchmark = True
