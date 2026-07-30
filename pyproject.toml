@@ -9,10 +9,11 @@ dependencies = [
     "matplotlib",
     "miditok>=3.0.6.post1",
     "pretty-midi>=0.2.11",
+    "prettytable>=3.18.0",
     "seaborn>=0.13.2",
     "tensorboard>=2.21.0",
-    "torch>=2.13.0",
-    "torchvision>=0.28.0",
+    "torch>=2.1.0",
+    "torchvision",
     "transformers>=5.14.1",
     "umap-learn>=0.5.12",
 ]
@@ -21,3 +22,12 @@ dependencies = [
 dev = [
     "ruff>=0.15.22",
 ]
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu132" }
+torchvision = { index = "pytorch-cu132" }
+
+[[tool.uv.index]]
+name = "pytorch-cu132"
+url = "https://download.pytorch.org/whl/cu132"
+explicit = true
