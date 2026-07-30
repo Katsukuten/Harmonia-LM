@@ -48,6 +48,9 @@ SANITY_CHECK = False
 transformers.logging.set_verbosity_error()
 logging.getLogger("transformers").setLevel(logging.ERROR)
 
+# Bypassing Pytorch's 2.6 security patch (safe since the checkpoint is made here)
+_original_load = torch.load
+
 # Hardware Optimizations (RTX 50 series / Blackwell Architecture)
 torch.backends.cudnn.benchmark = True
 torch.backends.cuda.matmul.allow_tf32 = True
